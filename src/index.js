@@ -30,7 +30,13 @@ export default function BaseballGame() {
 }
 
 const generateRandomNumber = () => {
-  return MissionUtils.Random.pickUniqueNumbersInRange(1, 9, 3).join("");
+  let arr = [];
+  while (arr.length < 3) {
+    const number = MissionUtils.Random.pickNumberInRange(1, 9);
+    if (!arr.includes(number)) arr.push(number);
+  }
+  arr = arr.join("");
+  return arr;
 };
 
 const play = (random, input) => {
@@ -38,8 +44,8 @@ const play = (random, input) => {
   const strikeCount = random.filter((v, i) => v === input[i]).length;
   const ballCount =
     random.filter((v) => input.includes(v)).length - strikeCount;
-  if (ballCount !== 0) returnString += `${ballCount} 볼 `;
-  if (strikeCount !== 0) returnString += `${strikeCount} 스트라이크`;
+  if (ballCount !== 0) returnString += `${ballCount}볼 `;
+  if (strikeCount !== 0) returnString += `${strikeCount}스트라이크`;
   if (ballCount === 0 && strikeCount === 0) returnString += `낫싱`;
 
   return returnString;
