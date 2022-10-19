@@ -1,27 +1,9 @@
+import showResult from "./showResult.js";
 import userInput from "./userInput.js";
 
-export default function BaseballGame({ target }) {
-  const result = document.getElementById("result");
-  const restartButton = document.getElementById("game-restart-button");
-  const h3 = document.querySelector("h3");
-  const inputElement = document.getElementById("user-input");
-  const formElement = document.getElementById("user-input").parentNode;
-
-  restartButton.style.display = "none";
-
-  restartButton.addEventListener("click", () => {
-    this.generateRandomNumber();
-    h3.innerHTML = `📄 결과`;
-    restartButton.style.display = "none";
-    result.innerHTML = ``;
-    result.style.display = "block";
-    inputElement.value = "";
-  });
-
+export default function BaseballGame() {
   this.state = {
-    randomNumber: 0,
-    inputNumber: 0,
-    returnString: "",
+    randomNumber: generateRandomNumber(),
   };
 
   this.setState = (newState) => {
@@ -29,64 +11,38 @@ export default function BaseballGame({ target }) {
       ...this.state,
       ...newState,
     };
-    if (newState.inputNumber)
+  };
+
+  const Result = new showResult({
+    generateRandomNumber: () => {
       this.setState({
-        returnString: this.play(
-          this.state.randomNumber,
-          this.state.inputNumber
-        ),
-      });
-    if (newState.returnString) result.innerHTML = `${this.state.returnString}`;
-    console.log(this.state);
-  };
-
-  this.generateRandomNumber = () => {
-    let newNumber = [];
-    while (newNumber.length < 3) {
-      const randomNumber = MissionUtils.Random.pickNumberInRange(1, 9);
-      if (!newNumber.includes(randomNumber)) newNumber.push(randomNumber);
-    }
-    newNumber = newNumber.join("");
-    this.setState({
-      randomNumber: newNumber,
-    });
-  };
-
-  this.play = (randomNumber, inputNumber) => {
-    const random = randomNumber.split("");
-    const input = inputNumber.split("");
-    let score = [0, 0];
-    random.forEach((v, i) => {
-      if (v === input[i]) score[0] += 1;
-      if (input.includes(v)) score[1] += 1;
-    });
-    score[1] = score[1] - score[0];
-
-    if (score[0] === 3) {
-      h3.innerHTML = `🎊정답을 맞추셨습니다!!🎊`;
-      restartButton.style.display = "block";
-      result.style.display = `none`;
-      return ``;
-    } else {
-      return `${score[1] === 0 ? "" : `${score[1]} 볼`} ${
-        score[0] === 0 ? "" : `${score[0]} 스트라이크`
-      } ${score[0] + score[1] === 0 ? `낫싱` : ``} `;
-    }
-  };
-
-  const Input = new userInput({
-    setInputNumber: (userInputNumber) => {
-      this.setState({
-        inputNumber: userInputNumber,
+        randomNumber: generateRandomNumber(),
       });
     },
-    inputElement: inputElement,
-    formElement: formElement,
+    inputElement: document.getElementById("user-input"),
   });
 
-  this.generateRandomNumber();
+  const Input = new userInput({
+    returnResult: (inputNumber) => {
+      Result.render(play(this.state.randomNumber.split(""), inputNumber));
+    },
+  });
 }
 
-new BaseballGame({
-  target: document.getElementById("app"),
-});
+const generateRandomNumber = () => {
+  return MissionUtils.Random.pickUniqueNumbersInRange(1, 9, 3).join("");
+};
+
+const play = (random, input) => {
+  let returnString = "";
+  const strikeCount = random.filter((v, i) => v === input[i]).length;
+  const ballCount =
+    random.filter((v) => input.includes(v)).length - strikeCount;
+  if (ballCount !== 0) returnString += `${ballCount} 볼 `;
+  if (strikeCount !== 0) returnString += `${strikeCount} 스트라이크`;
+  if (ballCount === 0 && strikeCount === 0) returnString += `낫싱`;
+
+  return returnString;
+};
+
+new BaseballGame();
