@@ -1,6 +1,11 @@
 import UserInput from "./userInput.js";
 
 export default function BaseballGame() {
+  const resultTitle = document.querySelector("h3");
+  const resultElement = document.getElementById("result");
+  const gameRestartButton = document.getElementById("game-restart-button");
+  gameRestartButton.style.display = `none`;
+
   this.state = {
     correctNumber: GenerateRandomValue(),
     userInputNumber: 0,
@@ -33,11 +38,29 @@ export default function BaseballGame() {
     return hint;
   };
 
+  this.render = () => {
+    const hint = this.play(
+      this.state.correctNumber,
+      this.state.userInputNumber
+    );
+
+    if (hint === "3스트라이크") {
+      resultTitle.innerHTML = `🎉정답을 맞추셨습니다🎉`;
+      resultElement.innerHTML = `게임을 새로 시작하시겠습니까?`;
+      gameRestartButton.style.display = `block`;
+    } else {
+      resultTitle.innerHTML = `📄 결과`;
+      resultElement.innerHTML = `${hint}`;
+      gameRestartButton.style.display = `none`;
+    }
+  };
+
   const UserInputComponent = new UserInput({
     setUserInputNumber: (inputNumber) => {
       this.setState({
         userInputNumber: inputNumber,
       });
+      this.render();
     },
   });
 }
