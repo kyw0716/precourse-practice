@@ -42,7 +42,7 @@ export default function UserInput({ setUserInputNumber }) {
         "입력 값은 세 글자여야 합니다. 1~9까지의 수를 중복없이 3개 입력 바랍니다!"
       );
     } else {
-      setUserInputNumber(inputElement.value);
+      setUserInputNumber(Number(inputElement.value));
     }
   });
 }

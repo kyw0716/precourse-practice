@@ -3,7 +3,7 @@ import UserInput from "./userInput.js";
 export default function BaseballGame() {
   this.state = {
     correctNumber: GenerateRandomValue(),
-    userInputNumber: "",
+    userInputNumber: 0,
   };
 
   this.setState = (nextState) => {
@@ -30,7 +30,7 @@ const GenerateRandomValue = () => {
     if (!random.includes(newNumber)) random.push(newNumber);
   }
 
-  return random.join("");
+  return Number(random.join(""));
 };
 
 new BaseballGame();
