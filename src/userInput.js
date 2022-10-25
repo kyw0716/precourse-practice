@@ -37,5 +37,13 @@ export default function UserInput() {
 
   formElement.addEventListener("submit", (e) => {
     e.preventDefault();
+
+    if (inputElement.value.length < 3) {
+      alert(
+        "입력 값은 세 글자여야 합니다. 1~9까지의 수를 중복없이 3개 입력 바랍니다!"
+      );
+    } else {
+      setUserInputNumber(inputElement.value);
+    }
   });
 }
