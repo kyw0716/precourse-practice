@@ -50,4 +50,8 @@ export default function UserInput() {
       currentInput: inputElement.value,
     });
   });
+
+  formElement.addEventListener("submit", (e) => {
+    e.preventDefault();
+  });
 }
