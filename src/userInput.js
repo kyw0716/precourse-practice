@@ -2,6 +2,10 @@ export default function UserInput({ setUserInputNumber }) {
   const inputElement = document.getElementById("user-input");
   const formElement = inputElement.parentNode;
 
+  this.reset = () => {
+    inputElement.value = ``;
+  };
+
   inputElement.addEventListener("input", (e) => {
     const currentInputValueArray = e.target.value.split("");
 

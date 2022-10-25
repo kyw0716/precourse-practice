@@ -63,6 +63,13 @@ export default function BaseballGame() {
       this.render();
     },
   });
+
+  gameRestartButton.addEventListener("click", () => {
+    resultTitle.innerHTML = `📄 결과`;
+    resultElement.innerHTML = ``;
+    gameRestartButton.style.display = `none`;
+    UserInputComponent.reset();
+  });
 }
 
 const GenerateRandomValue = () => {
