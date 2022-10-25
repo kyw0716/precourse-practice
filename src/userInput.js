@@ -2,18 +2,6 @@ export default function UserInput() {
   const inputElement = document.getElementById("user-input");
   const formElement = inputElement.parentNode;
 
-  this.state = {
-    currentInput: "",
-  };
-
-  this.setState = (nextState) => {
-    this.state = {
-      ...this.state,
-      ...nextState,
-    };
-    console.log(this.state);
-  };
-
   inputElement.addEventListener("input", (e) => {
     const currentInputValueArray = e.target.value.split("");
 
@@ -45,10 +33,6 @@ export default function UserInput() {
       );
       inputElement.value = e.target.value.slice(0, 3);
     }
-
-    this.setState({
-      currentInput: inputElement.value,
-    });
   });
 
   formElement.addEventListener("submit", (e) => {
