@@ -1,7 +1,11 @@
+import UserInput from "./userInput.js";
+
 export default function BaseballGame() {
   this.state = {
     correctNumber: GenerateRandomValue(),
   };
+
+  const UserInputComponent = new UserInput();
 }
 
 const GenerateRandomValue = () => {
