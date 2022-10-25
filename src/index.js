@@ -1,5 +1,7 @@
 export default function BaseballGame() {
-  console.log(GenerateRandomValue());
+  this.state = {
+    correctNumber: GenerateRandomValue(),
+  };
 }
 
 const GenerateRandomValue = () => {
