@@ -3,9 +3,24 @@ import UserInput from "./userInput.js";
 export default function BaseballGame() {
   this.state = {
     correctNumber: GenerateRandomValue(),
+    userInputNumber: "",
   };
 
-  const UserInputComponent = new UserInput();
+  this.setState = (nextState) => {
+    this.state = {
+      ...this.state,
+      ...nextState,
+    };
+    console.log(this.state);
+  };
+
+  const UserInputComponent = new UserInput({
+    setUserInputNumber: (inputNumber) => {
+      this.setState({
+        userInputNumber: inputNumber,
+      });
+    },
+  });
 }
 
 const GenerateRandomValue = () => {

@@ -1,4 +1,4 @@
-export default function UserInput() {
+export default function UserInput({ setUserInputNumber }) {
   const inputElement = document.getElementById("user-input");
   const formElement = inputElement.parentNode;
 
@@ -23,7 +23,6 @@ export default function UserInput() {
         "중복된 숫자는 입력하실 수 없습니다. 1~9까지의 수를 중복없이 3개 입력 바랍니다!"
       );
       inputElement.value = e.target.value.slice(0, -1);
-      console.log(inputElement.value);
     }
 
     // 세 글자를 초과해 입력한 경우
